@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         YgosuReplyBlock
-// @version      20221129203452
+// @version      20221201005911
 // @author       Jun
 // @description  이용자 댓글을 내용으로 차단합니다.
 // @homepageURL  https://js.cono.kr/ygosu
@@ -19,15 +19,11 @@ if (['ygosu.com', 'm.ygosu.com'].includes(document.domain)) {
 
     var YgosuBlock = {
         run: function() {
-            /*
-            console.log(Date());
-            var commentCnt = $('#reply_comment_cnt').text();
-            if (commentCnt !== '') {
-                clearTimeout(YgosuBlockInterval);
-                clearTimeout(YgosuBlockTimeout);
+            if (document.domain === 'ygosu.com') {
+                var $comments = $('.reply table tr .comment');
+            } else {
+                var $comments = $('.comment .desc .det');
             }
-            */
-            var $comments = $('.reply table tr .comment');
             if ($comments.length === 0) {
                 return false;
             }
@@ -45,9 +41,4 @@ if (['ygosu.com', 'm.ygosu.com'].includes(document.domain)) {
     var YgosuBlockInterval = setInterval(() => {
         YgosuBlock.run();
     }, 100);
-    /*
-    var YgosuBlockTimeout = setTimeout(() => {
-        clearTimeout(YgosuBlockInterval);
-    }, 3000);
-    */
 }
